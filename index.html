@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instascan</title>
+    <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script type="text/javascript" src="worker.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+</head>
+<body>
+    <h1>Scan your QR code</h1>
+    <video id="preview"></video>
+    <script type="module">
+
+        let worker = new Worker("worker.js");
+
+        worker.postMessage({});
+        worker.addEventListener("message", function (msg) {
+            console.log(msg)
+        });
+
+        let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+        scanner.addListener('scan', function (content) {
+            console.log(content);
+        });
+        Instascan.Camera.getCameras().then(function (cameras) {
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+            } else {
+                console.error('No  cameras found.');
+            }
+        }).catch(function (e) {
+            console.error(e);
+        });
+    </script>
+    <p>Order:
+        <ul>
+            <li>list element, </li>
+            <li>list element, </li>
+            <li>list element</li>
+        </ul>
+    </p>
+</body>
+</html>
