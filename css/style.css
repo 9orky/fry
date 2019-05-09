@@ -1,0 +1,35 @@
+* {
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: #616568;
+}
+
+h1 {
+    padding: 20px;
+}
+
+#preview {
+    position: relative;
+    margin: 0 auto;
+    width: 60%;
+}
+
+#preview:after {
+    content: "";
+    width: 200px;
+    height: 200px;
+    border: 1px solid red;
+}
+
+p {
+    font-size: 1.20rem;
+    font-weight: 600;
+    padding: 10px;
+}
+
+li {
+    display: inline-block;
+    text-decoration: none;
+}
