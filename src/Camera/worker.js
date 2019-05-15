@@ -1,24 +1,29 @@
-// import jsQR from 'jsQR';
+/* eslint-disable no-restricted-globals */
+import jsQR from 'jsqr';
 
-// console.log("1", 'function' === typeof importScripts)
-if( 'function' === typeof importScripts) {
-    importScripts("jsQR.js");
-    // addEventListener('message', onMessage);
-    // console.log(2)
-    addEventListener('message', (event) => {
+export default () => {
+    // self.importScripts("./jsQR/jsqr.js");
+    self.addEventListener('message', (event) => {
+        if (!event) {
+            return;
+        }
+
         const date = new Date();
         try {
             // console.log(event.data);
             const { data, width, height } = event.data;
             const start = date.getMilliseconds();
             const code = jsQR(data, width, height);
+
             console.log(start, date.getMilliseconds());
-            // console.log(height, width);
-            // console.log(code);
+
             self.postMessage(code);
             // console.log('OK')
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     });
 }
+
+
+
