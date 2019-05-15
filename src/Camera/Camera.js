@@ -57,13 +57,6 @@ class Camera extends React.Component {
             });
     }
 
-
-    // let worker = new Worker("worker.js");
-    //
-    // worker.addEventListener("message", function (msg) {
-    //     console.log(msg.data)
-    // })
-    // ;
     render() {
         return (
             <div>

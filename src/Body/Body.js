@@ -26,7 +26,7 @@ class Body extends React.Component {
         return(
             <div className="Body">
                 <h1>Zeskanuj kod QR</h1>
-                {/*<Camera/>*/}
+                <Camera/>
                 <h3>Zamówienie:</h3>
                 <ul>
                     {this.state.products.map((item, index) => {
