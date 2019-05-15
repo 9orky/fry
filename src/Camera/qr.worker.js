@@ -6,16 +6,13 @@ self.addEventListener('message', (event) => {
         return;
     }
 
-    const date = new Date();
     try {
-        // console.log(event.data);
         const { data, width, height } = event.data;
-        const start = date.getMilliseconds();
         const code = jsQR(data, width, height);
 
-        console.log(start, date.getMilliseconds());
-
-        self.postMessage(code);
+        if (code) {
+            self.postMessage(code);
+        }
     } catch (error) {
         console.log(error);
     }

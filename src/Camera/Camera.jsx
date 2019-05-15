@@ -1,9 +1,8 @@
 import React from 'react';
-import CameraButtons from './CameraButtons';
-import QrWorker from './worker.js';
+import Worker from './qr.worker.js';
+import './Camera.css'
 
 class Camera extends React.Component {
-    worker = null;
     constructor(props) {
         super(props);
         this.video = null;
@@ -17,15 +16,17 @@ class Camera extends React.Component {
     }
 
     componentWillMount() {
-        console.log(this.worker);
-        this.worker = QrWorker();
-        console.log(this.worker)
+        this.worker = new Worker();
     }
 
     componentDidMount() {
         this.video = document.querySelector('video');
         this.canvas = document.querySelector('canvas');
         this.canvasContext = null;
+
+        this.worker.addEventListener('message', (event) => {
+            console.log(event.data.data);
+        });
 
         navigator.mediaDevices
             .getUserMedia({
@@ -45,13 +46,7 @@ class Camera extends React.Component {
                     this.canvasContext.drawImage(this.video, 0, 0, this.video.videoWidth, this.video.videoHeight);
                     const imageData = this.canvasContext.getImageData(0, 0, this.video.videoWidth, this.video.videoHeight);
 
-                    const msg = {
-                        data: imageData,
-                        width: this.video.videoWidth,
-                        height: this.video.videoHeight,
-                    };
-
-                    this.worker.postMessage(msg)
+                    this.worker.postMessage(imageData);
 
                 }, 200);
             });
@@ -60,12 +55,8 @@ class Camera extends React.Component {
     render() {
         return (
             <div>
-                <video autoPlay></video>
-                <canvas styles={{display: "none"}}></canvas>
-                <CameraButtons onCameraSwitch={(facingUser) => {
-                    // console.log(facingUser);
-                    // this.switchDevice(facingUser);
-                }}/>
+                <video className={'camera'} autoPlay></video>
+                <canvas className={'hide'}></canvas>
             </div>
         )
     }

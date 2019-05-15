@@ -1,8 +1,6 @@
 import React from 'react';
 import "./Body.css"
 import Camera from "../Camera/Camera"
-import {BabelFileResult as json} from "@babel/core";
-
 
 class Body extends React.Component {
     constructor(props) {
