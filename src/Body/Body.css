@@ -1,11 +1,9 @@
-h2 {
+h1 {
     padding: 20px;
-    font-weight: 600;
 }
 
 h3 {
     margin-bottom: 8px;
-    font-weight: 600;
 }
 
 #preview {
@@ -14,8 +12,13 @@ h3 {
     width: 60%;
 }
 
-li {
+p {
+    font-size: 1.20rem;
+    font-weight: 600;
+    padding: 10px;
+}
 
+li {
     display: inline-block;
     text-decoration: none;
     margin-bottom: 8px;
