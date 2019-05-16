@@ -1,18 +1,15 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Worker from './qr.worker.js';
 import './Camera.css'
 
-class Camera extends React.Component {
+class Camera extends Component {
     constructor(props) {
         super(props);
+
         this.video = null;
         this.canvas = null;
         this.canvasContext = null;
-        this.cameraInterval = null;
-
-        this.state = {
-            currentDevice: null
-        };
+        this.worker = null;
     }
 
     componentWillMount() {
@@ -22,7 +19,6 @@ class Camera extends React.Component {
     componentDidMount() {
         this.video = document.querySelector('video');
         this.canvas = document.querySelector('canvas');
-        this.canvasContext = null;
 
         this.worker.addEventListener('message', (event) => {
             console.log(event.data.data);
@@ -37,19 +33,24 @@ class Camera extends React.Component {
             })
             .then((stream) => {
                 this.video.srcObject = stream;
-                this.canvasContext = this.canvas.getContext("2d");
 
-                this.cameraInterval = setInterval(() => {
-                    this.canvas.width = this.video.videoWidth;
-                    this.canvas.height = this.video.videoHeight;
+                this.video.addEventListener('loadedmetadata', (e) => {
+                    this.canvas.width = e.target.videoWidth;
+                    this.canvas.height = e.target.videoHeight;
 
-                    this.canvasContext.drawImage(this.video, 0, 0, this.video.videoWidth, this.video.videoHeight);
-                    const imageData = this.canvasContext.getImageData(0, 0, this.video.videoWidth, this.video.videoHeight);
+                    this.canvasContext = this.canvas.getContext("2d");
 
-                    this.worker.postMessage(imageData);
-
-                }, 200);
+                    setInterval(() => {
+                        const data = this.captureFrame();
+                        this.worker.postMessage(data);
+                    }, 200);
+                });
             });
+    }
+
+    captureFrame() {
+        this.canvasContext.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
+        return this.canvasContext.getImageData(0, 0, this.canvas.width, this.canvas.height);
     }
 
     render() {
