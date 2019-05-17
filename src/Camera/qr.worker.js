@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 import jsQR from 'jsqr';
 
-addEventListener('message', (event) => {
+self.addEventListener('message', (event) => {
     if (!event) {
         return;
     }
@@ -12,7 +12,10 @@ addEventListener('message', (event) => {
         const code = jsQR(data, width, height, {
             inversionAttempts: "dontInvert"
         });
-        console.log(code, width, height);
+
+        if (code) {
+            self.postMessage(code);
+        }
     } catch (error) {
         console.log(error);
     }

@@ -21,7 +21,9 @@ class Camera extends Component {
         this.canvas = document.querySelector('canvas');
 
         this.worker.addEventListener('message', (event) => {
-            console.log(event.data.data);
+            const code = document.createTextNode(event.data.data);
+            document.querySelector('#code').innerHTML = '';
+            document.querySelector('#code').appendChild(code);
         });
 
         navigator.mediaDevices
@@ -58,6 +60,7 @@ class Camera extends Component {
             <div>
                 <video className={'camera'} autoPlay></video>
                 <canvas className={'hide'}></canvas>
+                <div id="code"></div>
             </div>
         )
     }
