@@ -1,0 +1,15 @@
+
+.list-group-item .card-header {
+    margin: 0 auto;
+    width: 90vw;
+}
+
+.list-group-item:first-child {
+    border-radius: unset;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

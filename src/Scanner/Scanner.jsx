@@ -1,8 +1,8 @@
 import React from 'react';
-import "./Body.css"
-import Camera from "../Camera/Camera"
+import "./Scanner.css"
+import Camera from "./Camera/Camera"
 
-class Body extends React.Component {
+class Scanner extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,22 +22,21 @@ class Body extends React.Component {
 
     render() {
         return(
-            <div className="Body">
-                <h1>Zeskanuj kod QR</h1>
+            <div className="scanner">
                 <Camera/>
-                <h3>Zamówienie:</h3>
-                <ul>
+                <div className="list-group">
+                    <p className="list-group-item list-group-item-secondary">Zamówienie</p>
                     {this.state.products.map((item, index) => {
                         return (
                             <div key={index}>
-                                <li>{item.name}</li>
+                                <li className="list-group-item list-group-item-action">{item.name}</li>
                             </div>
                         )})
                     }
-                </ul>
+                </div>
 
             </div>)
     }
 }
 
-export default Body;
+export default Scanner;
