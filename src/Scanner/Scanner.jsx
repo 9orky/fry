@@ -15,9 +15,9 @@ class Scanner extends React.Component {
     }
 
     getProduct() {
-        fetch("https://private-595cf-zitrafry.apiary-mock.com/api/deliveries/{deliveryId}/products")
-            .then(resp => resp.json())
-            .then(resp => this.setState({products: resp}))
+        fetch("https://private-595cf-zitrafry.apiary-mock.com/deliverers/api/deliveries/deliveryId/products")
+            .then(response => response.json())
+            .then(response => this.setState({products: response}))
     }
 
     render() {

@@ -1,11 +1,7 @@
 import React from 'react';
 import "./Navigation.css"
 import {
-    HashRouter,
-    Route,
-    Link,
-    Switch,
-    NavLink,
+    Link
 } from 'react-router-dom';
 
 class Navigation extends React.Component{
