@@ -12,6 +12,7 @@ class Authorized extends React.Component {
         if (this.props.loggedIn) {
             return this.props.children;
         }
+
         return null;
     }
 }

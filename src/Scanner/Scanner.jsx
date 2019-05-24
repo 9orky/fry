@@ -1,6 +1,7 @@
 import React from 'react';
 import "./Scanner.css"
 import Camera from "./Camera/Camera"
+import http from "../http";
 
 class Scanner extends React.Component {
     constructor(props) {
@@ -15,9 +16,9 @@ class Scanner extends React.Component {
     }
 
     getProduct() {
-        fetch("https://private-595cf-zitrafry.apiary-mock.com/deliverers/api/deliveries/deliveryId/products")
-            .then(response => response.json())
-            .then(response => this.setState({products: response}))
+        http
+            .get("/deliverers/api/deliveries/deliveryId/products")
+            .then(response => this.setState({products: response.data}))
     }
 
     render() {

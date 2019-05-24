@@ -1,51 +1,24 @@
 import React from 'react';
+import http from './http';
 
-export default class AuthService {
-
+class AuthService {
     login(username, password) {
         return new Promise((resolve, reject)=> {
-            fetch("https://private-595cf-zitrafry.apiary-mock.com/deliverers/api/login", {
-                    method: "POST",
-                    body: JSON.stringify({username, password})
-            })
-            .then((response) => {
-                if (!response.ok) {
-                    if (response.status >= 400) {
-                        reject('Failed');
-                    }
-                }
+            http
+                .post("/deliverers/api/login", {username, password})
+                .then((response) => {
+                    const token = response.data;
 
-                return response.json();
-            })
-            .then(token => {
-                if (token) {
                     localStorage.setItem('token', JSON.stringify(token));
-                }
-
-                resolve(token);
-            })
+                    resolve(token);
+                })
+                .catch((error) => {
+                    const apiError = error.response.data;
+                    reject(apiError.errorMessage);
+                });
         });
     }
-
-    response(response) {
-        console.log(response);
-
-
-        // response.text().then(text => {
-        //     const data = text && JSON.parse(text);
-        //     if (!response.ok) {
-        //         if (response.status === 401) {
-        //             logout();
-        //             location.reload(true);
-        //         }
-        //         const error = (data && data.message) || response.statusText;
-        //         return Promise.reject(error);
-        //     }
-        //     return data;
-        // });
-    }
-
-    logout() {
-        localStorage.removeItem('user');
-    }
 }
+
+const authService = new AuthService();
+export default authService;

@@ -1,12 +1,14 @@
 import React from 'react';
 import "./LoginPage.css"
-import AuthService from "../AuthService";
+import authService from "../AuthService";
 
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            loginError: "",
+
             username: "",
             password: "",
         };
@@ -22,22 +24,30 @@ class LoginPage extends React.Component {
 
     onSubmitHandler = (event) => {
         event.preventDefault();
-        const authService = new AuthService();
+        this.setState({
+            loginError: ""
+        });
+
         authService
             .login("a", "b")
-            .then((token) => {console.log(token)})
-            .catch((error) => console.log(error));
+            .then((token) => {this.props.onLogin()})
+            .catch((error) => this.setState({
+                loginError: 'Nieprawidłowe hasło'
+            }));
     };
 
     render() {
         return (
             <div className="form-group">
                 <h5>Logowanie</h5>
+                {this.state.loginError &&
+                    <p className="error">{this.state.loginError}</p>
+                }
                 <form>
                     <div >
                         <label htmlFor="username" ></label>
                         <input type="text" className="form-control"
-                               placeholder="Podaj email"
+                               placeholder="Nazwa użytkownika"
                                value={this.state.username}
                                onChange={this.onUsernameChangeHandler}/>
                     </div>
@@ -45,7 +55,7 @@ class LoginPage extends React.Component {
                         <label htmlFor="password" ></label>
                         <input type="password"
                                className="form-control"
-                               placeholder="Podaj hasło"
+                               placeholder="Hasło"
                                value={this.state.password}
                                onChange={this.onPasswordChangeHandler}/>
                     </div>

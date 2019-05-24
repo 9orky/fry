@@ -11,14 +11,32 @@ import {
 } from 'react-router-dom';
 import LoginPage from "./LoginPage/LoginPage";
 import Authorized from "./Authorized";
+import userService from './UserService'
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: null
+        }
+    }
+
+    onLogin() {
+        userService
+            .getUser()
+            .then((user) => {
+                this.setState({user: user});
+                history.push('/');
+            })
+    }
+
     render() {
+        console.log(!!this.state.user);
         return (
             <Router history={history}>
                     <Switch>
-                        <Route path='/login' component={LoginPage} />
-                        <Authorized loggedIn={false}>
+                        <Route path='/login' component={() => <LoginPage onLogin={this.onLogin.bind(this)}/>} />
+                        <Authorized loggedIn={!!this.state.user}>
                             <Navigation/>
                             <Route exact path='/' component={DeliveryRoute} />
                             <Route path='/trasa' component={DeliveryRoute} />
