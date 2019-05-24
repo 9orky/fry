@@ -1,5 +1,6 @@
 import React from 'react';
 import "./Navigation.css"
+import Nav from 'react-bootstrap/Nav'
 import {
     Link
 } from 'react-router-dom';
@@ -7,16 +8,14 @@ import {
 class Navigation extends React.Component{
     render() {
         return (
-            <nav className="navbar navbar-expand navbar-light justify-content-center">
-                <ul className="navbar-nav">
-                    <li className="nav-item">
-                        <Link to="/trasa" className="nav-link">Trasa</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="/skaner" className="nav-link">Skaner</Link>
-                    </li>
-                </ul>
-            </nav>
+            <Nav justify variant="tabs">
+                <Nav.Item>
+                    <Link className="nav-link" to="/trasa">Trasa</Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Link className="nav-link" to="/skaner">Skaner</Link>
+                </Nav.Item>
+            </Nav>
         );
     }
 }

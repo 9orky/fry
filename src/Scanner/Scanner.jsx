@@ -1,6 +1,7 @@
 import React from 'react';
-import "./Scanner.css"
-import Camera from "./Camera/Camera"
+import "./Scanner.css";
+import ListGroup from 'react-bootstrap/ListGroup';
+import Camera from "./Camera/Camera";
 import http from "../http";
 
 class Scanner extends React.Component {
@@ -25,18 +26,18 @@ class Scanner extends React.Component {
         return(
             <div className="scanner">
                 <Camera/>
-                <div className="list-group">
-                    <p className="list-group-item list-group-item-secondary">Zamówienie</p>
+                <ListGroup>
+                    <ListGroup.Item variant="secondary">Zamówienie</ListGroup.Item>
                     {this.state.products.map((item, index) => {
                         return (
                             <div key={index}>
-                                <li className="list-group-item list-group-item-action">{item.name}</li>
+                                <ListGroup.Item variant="action">{item.name}</ListGroup.Item>
                             </div>
                         )})
                     }
-                </div>
-
-            </div>)
+                </ListGroup>
+            </div>
+        )
     }
 }
 

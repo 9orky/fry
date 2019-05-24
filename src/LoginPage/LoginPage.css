@@ -1,14 +1,6 @@
-.form-group {
-    margin: 0 auto;
+.log-container {
+    margin: 20px auto;
     width: 90vw;
-}
-
-.btn-primary {
-    margin-top: 20px;
-}
-
-h5 {
-    margin-top: 20px;
 }
 
 .error {
