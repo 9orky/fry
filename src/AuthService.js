@@ -1,15 +1,15 @@
 import React from 'react';
-import http from './http';
+import {http} from './http';
 
 class AuthService {
     login(username, password) {
         return new Promise((resolve, reject)=> {
             http
-                .post("/deliverers/api/login", {username, password})
+                .post("/api/deliverers/login", {username, password})
                 .then((response) => {
                     const token = response.data;
 
-                    localStorage.setItem('token', JSON.stringify(token));
+                    localStorage.setItem('token', token.token);
                     resolve(token);
                 })
                 .catch((error) => {

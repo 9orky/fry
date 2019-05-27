@@ -2,7 +2,7 @@ import React from 'react';
 import "./Scanner.css";
 import ListGroup from 'react-bootstrap/ListGroup';
 import Camera from "./Camera/Camera";
-import http from "../http";
+import {http} from "../http";
 
 class Scanner extends React.Component {
     constructor(props) {

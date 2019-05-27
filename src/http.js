@@ -1,10 +1,14 @@
 import axios from 'axios';
 
-const http = axios.create({
-    baseURL: 'https://private-595cf-zitrafry.apiary-mock.com',
+export const http = axios.create({
+    baseURL: 'https://zitra.online',
     headers: {
         'Content-Type': 'application/json'
     }
 });
 
-export default http;
+export function getAuthorized() {
+    const jwtString = localStorage.getItem('token');
+    http.defaults.headers = {...http.defaults.headers, "Authorization": `Bearer ${jwtString}`};
+    return http;
+}

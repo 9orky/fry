@@ -1,0 +1,10 @@
+.btn-secondary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+

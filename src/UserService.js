@@ -1,9 +1,9 @@
-import http from "./http";
+import {getAuthorized} from "./http";
 
 class UserService {
     getUser() {
         return new Promise((resolve)=> {
-            http
+            getAuthorized()
                 .get("/api/users/me")
                 .then(user => resolve(user.data))
                 .catch();

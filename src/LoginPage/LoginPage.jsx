@@ -31,12 +31,13 @@ class LoginPage extends React.Component {
         });
 
         authService
-            .login("a", "b")
+            .login(this.state.username, this.state.password)
             .then((token) => {this.props.onLogin()})
             .catch((error) => this.setState({
                 loginError: 'Nieprawidłowe hasło'
             }));
     };
+
 
     render() {
         return (

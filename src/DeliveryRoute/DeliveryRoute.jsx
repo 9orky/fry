@@ -1,7 +1,7 @@
 import React from 'react';
 import './DeliveryRoute.css';
 import history from "../history"
-import http from '../http';
+import {http} from '../http';
 
 class DeliveryRoute extends React.Component{
     constructor(props) {

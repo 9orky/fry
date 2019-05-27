@@ -12,6 +12,8 @@ import {
 import LoginPage from "./LoginPage/LoginPage";
 import Authorized from "./Authorized";
 import userService from './UserService'
+import {http} from "./http";
+import Logout from "./Logout/Logout";
 
 class App extends React.Component {
     constructor(props) {
@@ -30,6 +32,12 @@ class App extends React.Component {
             })
     }
 
+    onLogout() {
+        this.setState({user: null});
+        console.log(this.state);
+        history.push('/login')
+    }
+
     render() {
         console.log(!!this.state.user);
         return (
@@ -38,6 +46,7 @@ class App extends React.Component {
                         <Route path='/login' component={() => <LoginPage onLogin={this.onLogin.bind(this)}/>} />
                         <Authorized loggedIn={!!this.state.user}>
                             <Navigation/>
+                            <Logout onLogout={this.onLogout.bind(this)}/>
                             <Route exact path='/' component={DeliveryRoute} />
                             <Route path='/trasa' component={DeliveryRoute} />
                             <Route path='/skaner' component={Scanner} />
