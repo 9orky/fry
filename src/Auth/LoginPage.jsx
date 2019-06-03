@@ -1,6 +1,6 @@
 import React from 'react';
 import "./LoginPage.css"
-import authService from "../AuthService";
+import authService from "./AuthService";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 

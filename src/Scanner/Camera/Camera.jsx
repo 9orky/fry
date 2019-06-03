@@ -10,6 +10,7 @@ class Camera extends Component {
         this.canvas = null;
         this.canvasContext = null;
         this.worker = null;
+        this.interval = null;
     }
 
     componentWillMount() {
@@ -21,9 +22,12 @@ class Camera extends Component {
         this.canvas = document.querySelector('canvas');
 
         this.worker.addEventListener('message', (event) => {
-            const code = document.createTextNode(event.data.data);
+            const code = event.data.data;
+            const htmlCode = document.createTextNode(event.data.data);
             document.querySelector('#code').innerHTML = '';
-            document.querySelector('#code').appendChild(code);
+            document.querySelector('#code').appendChild(htmlCode);
+
+            this.props.getCodeCallback(code);
         });
 
         navigator.mediaDevices
@@ -42,10 +46,11 @@ class Camera extends Component {
 
                     this.canvasContext = this.canvas.getContext("2d");
 
-                    setInterval(() => {
+                    this.interval = setInterval(() => {
                         const data = this.captureFrame();
                         this.worker.postMessage(data);
                     }, 200);
+
                 });
             });
     }
@@ -53,6 +58,13 @@ class Camera extends Component {
     captureFrame() {
         this.canvasContext.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
         return this.canvasContext.getImageData(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    componentWillUnmount() {
+        console.log('um')
+        clearInterval(this.interval);
+        this.video.srcObject = null;
+        this.canvas = null;
     }
 
     render() {

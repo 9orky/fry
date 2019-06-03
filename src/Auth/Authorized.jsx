@@ -1,5 +1,5 @@
 import React from 'react';
-import history from './history';
+import history from '../Service/history';
 
 class Authorized extends React.Component {
     componentDidMount() {

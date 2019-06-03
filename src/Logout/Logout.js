@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import "./Logout.css"
-import {http} from "../http";
+import {http} from "../Service/http";
 
 class Logout extends React.Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class Logout extends React.Component {
         http
             .delete("/api/logout")
             .then((response) => {
-                console.log(response);
+                console.log(response );
                 localStorage.clear();
                 this.props.onLogout()
             })
@@ -23,10 +23,9 @@ class Logout extends React.Component {
     render() {
         return (
             <Button
-                variant={"secondary"}
+                variant={"outline-light"}
                 onClick={this.onLogoutHandler}
             >Wyloguj</Button>
-
         )
     }
 }

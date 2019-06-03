@@ -1,5 +1,5 @@
 import React from 'react';
-import {http} from './http';
+import {http} from '../Service/http';
 
 class AuthService {
     login(username, password) {

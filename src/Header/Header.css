@@ -1,0 +1,10 @@
+.nav-header {
+    background-color: #007bff;
+    height: 60px;
+    align-items: center;
+}
+
+.navbar-brand {
+    font-size: 1.6rem;
+    color: white;
+}

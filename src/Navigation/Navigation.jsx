@@ -8,7 +8,7 @@ import {
 class Navigation extends React.Component{
     render() {
         return (
-            <Nav justify variant="tabs">
+            <Nav className="nav-bottom" justify variant="tabs">
                 <Nav.Item>
                     <Link className="nav-link" to="/trasa">Trasa</Link>
                 </Nav.Item>
