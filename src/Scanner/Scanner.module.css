@@ -2,18 +2,14 @@
     text-align: center;
 }
 
-.scan-code-text {
-    margin-top: 0.5rem;
-}
-
-.order-group-scroll {
+.orderGroupScroll {
     max-height: 250px;
     margin-bottom: 10px;
     overflow: scroll;
     overflow-scrolling: touch;
 }
 
-.order-container {
+.orderContainer {
     top: 257px;
     position: absolute;
     margin-left: auto;

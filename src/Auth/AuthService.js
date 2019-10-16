@@ -1,11 +1,11 @@
-import React from 'react';
 import {http} from '../Service/http';
 
 class AuthService {
-    login(username, password) {
-        return new Promise((resolve, reject)=> {
+
+    login = (username, password) => {
+        return new Promise((resolve, reject) => {
             http
-                .post("/api/deliverers/login", {username, password})
+                .post("/deliverers/login", {username, password})
                 .then((response) => {
                     const token = response.data;
 
@@ -19,6 +19,6 @@ class AuthService {
         });
     }
 }
-
 const authService = new AuthService();
 export default authService;
+

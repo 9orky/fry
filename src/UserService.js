@@ -4,7 +4,7 @@ class UserService {
     getUser() {
         return new Promise((resolve, reject)=> {
             getAuthorized()
-                .get("/api/users/me")
+                .get("/users/me")
                 .then(user => resolve(user.data))
                 .catch((error) => reject(error));
         });
@@ -12,7 +12,7 @@ class UserService {
     getStore() {
         return new Promise((resolve)=> {
             getAuthorized()
-                .get("/api/deliverers/stores")
+                .get("/deliverers/stores")
                 .then(store => resolve(store.data))
                 .catch();
         });

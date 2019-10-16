@@ -1,11 +1,11 @@
-.nav-bottom {
+.navBottom {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
 }
 
-.nav-link {
+.navLink {
     font-size: 1.3rem;
     background-color: white;
 }

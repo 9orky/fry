@@ -1,29 +1,23 @@
-import React, {Component} from 'react';
+import React, {useEffect, useRef} from 'react';
 import Worker from './qr.worker.js';
-import './Camera.css'
+import styles from './Camera.module.css';
 
-class Camera extends Component {
-    constructor(props) {
-        super(props);
+const Camera = (props) => {
 
-        this.video = null;
-        this.canvas = null;
-        this.canvasContext = null;
-        this.worker = null;
-        this.interval = null;
-    }
+    let video = useRef();
+    let canvas = useRef();
+    let canvasContext = useRef();
+    let interval = useRef();
 
-    componentWillMount() {
-        this.worker = new Worker();
-    }
+    useEffect(() => {
+        let worker = null;
+        video.current = document.querySelector('video');
+        canvas.current = document.querySelector('canvas');
 
-    componentDidMount() {
-        this.video = document.querySelector('video');
-        this.canvas = document.querySelector('canvas');
-
-        this.worker.addEventListener('message', (event) => {
+        worker = new Worker();
+        worker.addEventListener('message', (event) => {
             const code = event.data.data;
-            this.props.getCodeCallback(code);
+            props.getCodeCallback(code);
         });
 
         navigator.mediaDevices
@@ -35,43 +29,44 @@ class Camera extends Component {
                 audio: false,
             })
             .then((stream) => {
-                this.video.srcObject = stream;
+                video.current.srcObject = stream;
 
-                this.video.addEventListener('loadedmetadata', (e) => {
-                    this.canvas.width = e.target.videoWidth;
-                    this.canvas.height = e.target.videoHeight;
+                video.current.addEventListener('loadedmetadata', (e) => {
+                    canvas.current.width = e.target.videoWidth;
+                    canvas.current.height = e.target.videoHeight;
 
-                    this.canvasContext = this.canvas.getContext("2d");
+                    canvasContext.current = canvas.current.getContext("2d");
 
-                    this.interval = setInterval(() => {
-                        const data = this.captureFrame();
-                        this.worker.postMessage(data);
+                    interval.current = setInterval(() => {
+                        const data = captureFrame();
+                        worker.postMessage(data);
                     }, 200);
 
                 });
             });
-    }
+    }, [props]);
 
-    captureFrame() {
-        this.canvasContext.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
-        return this.canvasContext.getImageData(0, 0, this.canvas.width, this.canvas.height);
-    }
 
-    componentWillUnmount() {
-        clearInterval(this.interval);
-        this.video.srcObject = null;
-        this.canvas = null;
-    }
+    const captureFrame = () => {
+        canvasContext.current.drawImage(video.current, 0, 0, canvas.current.width, canvas.current.height);
+        return canvasContext.current.getImageData(0, 0, canvas.current.width, canvas.current.height);
+    };
 
-    render() {
-        return (
-            <div>
-                <video className="camera" autoPlay></video>
-                <canvas className="hide"></canvas>
-                {/*<div id="code"></div>*/}
-            </div>
-        )
-    }
-}
+    useEffect(() => {
+        return () => {
+            clearInterval(interval.current);
+            video.current.srcObject = null;
+            canvas.current = null;
+        }
+    });
+
+    return (
+        <div>
+            <video className={styles.camera} autoPlay></video>
+            <canvas className={styles.hide}></canvas>
+            {/*<div id="code"></div>*/}
+        </div>
+    )
+};
 
 export default Camera;

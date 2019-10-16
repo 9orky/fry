@@ -1,16 +1,16 @@
-.input-area {
+.inputArea {
     width: 75vw;
     margin: 0 auto;
 }
 
-.form-control-scanner {
+.formControlScanner {
     text-transform: uppercase;
 }
 
-.form-control-scanner::placeholder {
+.formControlScanner::placeholder {
     text-transform: lowercase;
 }
 
-.form-control-scanner::placeholder::first-letter {
+.formControlScanner::placeholder::first-letter {
     text-transform: uppercase;
 }

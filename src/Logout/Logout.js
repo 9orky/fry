@@ -1,37 +1,29 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import "./Logout.css"
+import styles from "./Logout.module.css"
 import {http} from "../Service/http";
 
-class Logout extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+const Logout = (props) => {
 
-    onLogoutHandler = (event) => {
+    const onLogoutHandler = (event) => {
         event.preventDefault();
         http
-            .delete("/api/logout")
+            .delete("/logout")
             .then((response) => {
                 console.log(response );
                 localStorage.clear();
-                this.props.onLogout()
+                props.onLogout()
             })
             .catch();
     };
 
-    render() {
-        return (
-            <a
-                href={"#"}
-                className="logout-btn"
-                // variant={"outline-light"}
-                onClick={this.onLogoutHandler}>
-                <i className="fas fa-sign-out-alt"></i>
-            </a>
-
-        )
-    }
-}
+    return (
+        <a
+            href={"#"}
+            className={styles.logoutBtn}
+            onClick={onLogoutHandler}>
+            <i className="fas fa-sign-out-alt"></i>
+        </a>
+    )
+};
 
 export default Logout;

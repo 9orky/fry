@@ -1,20 +1,20 @@
-import React from 'react';
+import {useEffect} from 'react';
 import history from '../Service/history';
 
-class Authorized extends React.Component {
-    componentDidMount() {
-        if (!this.props.loggedIn) {
+const Authorized = (props) => {
+
+    useEffect(() => {
+        if (!props.loggedIn) {
             history.push('/fry/login');
         }
+    }, [props]);
+
+
+    if (props.loggedIn) {
+        return props.children;
     }
 
-    render() {
-        if (this.props.loggedIn) {
-            return this.props.children;
-        }
-
-        return null;
-    }
-}
+    return null;
+};
 
 export default Authorized;

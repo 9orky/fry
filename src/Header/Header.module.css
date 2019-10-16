@@ -1,11 +1,11 @@
-.header-container {
+.container {
     background-color: #007bff;
     height: 50px;
     align-items: center;
     display: flex;
 }
 
-.navbar-brand {
+.logo {
     font-size: 1.5rem;
     font-weight: 500;
     color: white;
@@ -15,6 +15,6 @@
     display: flex;
 }
 
-.empty-div {
+.emptyDiv {
     flex-grow: 1;
 }

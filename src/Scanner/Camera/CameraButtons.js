@@ -1,24 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 
-class CameraButtons extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            facingUser: false
-        };
+const CameraButtons = (props) => {
+    const [facingUser, setFacingUser] = useState(false);
 
-    }
-
-    render() {
-        return (
-            <div>
-                <button onClick={() => {
-                    this.setState({facingUser: !this.state.facingUser})
-                    this.props.onCameraSwitch(!this.state.facingUser)
-                }}>Switch</button>
-            </div>
-        )
-    }
-}
+    return (
+        <div>
+            <button onClick={() => {
+                setFacingUser(!facingUser);
+                props.onCameraSwitch(!facingUser)
+            }}>Switch</button>
+        </div>
+    )
+};
 
 export default CameraButtons;

@@ -1,21 +1,16 @@
 import React from 'react';
 import Nav from 'react-bootstrap/Nav'
-import "./Header.css"
+import styles from "./Header.module.css"
 import Logout from "../Logout/Logout";
 
-class Header extends React.Component{
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
-            <Nav className="header-container">
-                <div className="empty-div"></div>
-                <div className="navbar-brand">FRY</div>
-                <Logout onLogout={() => this.props.onLogout()}/>
-            </Nav>
-        );
-    }
-}
+const Header = (props) => {
+    return (
+        <Nav className={styles.container}>
+            <div className={styles.emptyDiv}></div>
+            <div className={styles.logo}>FRY</div>
+            <Logout onLogout={() => props.onLogout()}/>
+        </Nav>
+    );
+};
 
 export default Header;

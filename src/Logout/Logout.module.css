@@ -2,15 +2,10 @@
     justify-content: center;
 }
 
-.logout-btn {
-    /*position: absolute;*/
-    /*right: 0;*/
-    /*top: 0;*/
-    /*margin: 12px 20px;*/
+.logoutBtn {
     flex-grow: 1;
     display: flex;
     justify-content: center;
-
 }
 
 .fas {

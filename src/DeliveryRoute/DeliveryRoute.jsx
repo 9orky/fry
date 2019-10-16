@@ -1,87 +1,81 @@
-import React from 'react';
-import './DeliveryRoute.css';
+import React, {useState, useEffect} from 'react';
+import styles from './DeliveryRoute.module.css';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import {http} from '../Service/http';
 
-class DeliveryRoute extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            route: null,
-            visitedPickUpPoints: [],
-            showModal: false
-        }
-    }
+const DeliveryRoute = (props) => {
+   const [route, setRoute] = useState("");
+   const [visitedPickUpPoints, setVisitedPickUpPoints] = useState([]);
 
-    componentDidMount() {
+
+    useEffect((props) => {
         http
-            .get(`/api/deliverers/stores/${this.props.store.id}/routes`)
+            .get(`/deliverers/stores/${props.store.id}/routes`)
             .then(response => {
-                this.setState({route: response.data});
-                this.getVisitedPickupPoints(this.props.store.id, response.data.id)
+                setRoute(response.data);
+                getVisitedPickupPoints(props.store.id, response.data.id)
             });
-    }
+    }, [props]);
 
-    checkIn(storePickUpPointId) {
-        const storeId = this.props.store.id;
-        const routeId = this.state.route.id;
+
+    const checkIn = (storePickUpPointId) => {
+        const storeId = props.store.id;
+        const routeId = route.id;
 
         http
-            .post(`/api/deliverers/stores/${storeId}/routes/${routeId}/check-ins`, {storePickUpPointId})
+            .post(`/deliverers/stores/${storeId}/routes/${routeId}/check-ins`, {storePickUpPointId})
             .then(() => {
-                this.getVisitedPickupPoints(storeId, routeId)
+                getVisitedPickupPoints(storeId, routeId)
             })
             .catch(() => alert('Już wysłałeś powiadomienia'));
-    }
+    };
 
-    getVisitedPickupPoints(storeId, routeId) {
+    const getVisitedPickupPoints = (storeId, routeId) => {
         http
-            .get(`/api/deliverers/stores/${storeId}/routes/${routeId}/check-ins`)
+            .get(`/deliverers/stores/${storeId}/routes/${routeId}/check-ins`)
             .then((response) => {
                 if (response.data.length) {
                     const visited = response.data.map((visitedPickUpPoint) => {
                         return visitedPickUpPoint.storePickUpPointId;
                     });
-                    this.setState({visitedPickUpPoints: visited})
+                    setVisitedPickUpPoints(visited)
                 }
             })
             .catch();
-    }
+    };
 
-    render() {
-        return (
-            <ListGroup>
-                <ListGroup.Item variant="secondary">
-                    Adresy dostaw
-                </ListGroup.Item>
-                <ListGroup  className="route-scroll">
-                    {this.state.route && this.state.route.pickUpPoints.map((pickUpPoint, index) => {
-                        return (
-                            <ListGroup key={index}>
-                                <ListGroup.Item
-                                    variant="action"
-                                    className="flex">
-                                    <div className="pickUpPoint">
-                                        {pickUpPoint.street} {pickUpPoint.buildingNumber}<br/>
-                                        {pickUpPoint.postalCode} {pickUpPoint.city}
-                                    </div>
-                                    <Button
-                                        variant={"primary"}
-                                        disabled={this.state.visitedPickUpPoints.includes(pickUpPoint.id)}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            window.confirm("Czy na pewno chcesz wysłać powiadomienia do klientów?");
-                                            this.checkIn(pickUpPoint.id);
-                                        }}>Już jestem!</Button>
-                                </ListGroup.Item>
-                            </ListGroup>
-                        )
-                    })}
-                </ListGroup>
+    return (
+        <ListGroup>
+            <ListGroup.Item variant="secondary">
+                Adresy dostaw
+            </ListGroup.Item>
+            <ListGroup  className={styles.routeScroll}>
+                {route && route.pickUpPoints.map((pickUpPoint, index) => {
+                    return (
+                        <ListGroup key={index}>
+                            <ListGroup.Item
+                                variant="action"
+                                className={styles.flex}>
+                                <div className={styles.pickUpPoint}>
+                                    {pickUpPoint.street} {pickUpPoint.buildingNumber}<br/>
+                                    {pickUpPoint.postalCode} {pickUpPoint.city}
+                                </div>
+                                <Button
+                                    variant={"primary"}
+                                    disabled={visitedPickUpPoints.includes(pickUpPoint.id)}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        window.confirm("Czy na pewno chcesz wysłać powiadomienia do klientów?");
+                                        checkIn(pickUpPoint.id);
+                                    }}>Już jestem!</Button>
+                            </ListGroup.Item>
+                        </ListGroup>
+                    )
+                })}
             </ListGroup>
-        );
-    }
-}
+        </ListGroup>
+    )
+};
 
 export default DeliveryRoute;
