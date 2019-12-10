@@ -22,7 +22,7 @@ const App = () => {
 
 
     const onLogin = () => {
-        setUser(true);
+        setUser(null);
 
         userService
             .getUser()

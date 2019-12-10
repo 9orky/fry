@@ -1,4 +1,4 @@
-FROM node:10-alpine as builder
+FROM node:12-alpine as builder
 
 WORKDIR /srv/fry
 
@@ -9,10 +9,12 @@ ADD ./ ./
 RUN npm install --silent
 RUN npm run build
 
-FROM nginx:1.15
+FROM nginx:1.17.6-alpine
 
 ARG VHOST_FILENAME="fry.conf"
 ARG DOMAIN
+
+RUN adduser -D -H -u 1000 -s /bin/bash -Gwww-data www-data
 
 RUN mkdir -p /etc/nginx/sites-available
 RUN mkdir -p /etc/nginx/sites-enabled
